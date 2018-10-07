@@ -17,7 +17,7 @@ You need to know the result of elections or find the most used word in the text?
 Fork the repo TODO LINK. Send a pull request after each stage.
 
 ## Stages
-### 1. Most common number
+### 1. The greatest number
 #### Learn topics
 - [Branching statements](https://hyperskill.org/learn/lesson/51351/) (and previous topics).
 - [Fork and pull request](https://hyperskill.org/learn/lesson/159182/) (and previous topics).
@@ -27,7 +27,7 @@ Read integers from the console. Please note that there can be not only a single 
 Your program must process all the input lines. To end the input, `Ctrl+D` is sent.
 
 Then print a line like `Total numbers: X`.  
-Then print a line like `Most common number: Y (Z times)` (if there are several most common numbers, print any of them).
+Then print a line like `The greatest number: Y (Z times)`.
 
 #### Input example
 ```
@@ -39,7 +39,7 @@ Then print a line like `Most common number: Y (Z times)` (if there are several m
 #### Output example
 ```
 Total numbers: 7.
-Most common number: 1 (3 times).
+The greatest number: 42 (1 time).
 ```
 
 #### Let’s go!
@@ -59,7 +59,7 @@ public final class SimpleDataSorter {
 }
 ```
 
-### 2. Most common data 
+### 2. The greatest data 
 #### Learn topics
 - [Command-line arguments](https://hyperskill.org/learn/lesson/62780/) (and previous topics).
 - [Programs with doubles](https://hyperskill.org/learn/lesson/101660/) (and previous topics).
@@ -68,11 +68,11 @@ public final class SimpleDataSorter {
 #### Description
 Parse the "data type" run argument. After the argument name there should be the "data type name" argument. Give names to the arguments. Consider using static final strings to store the given names.
 
-Implement searching for most common line and most common word.
+Implement searching for line and word with the greatest length.
 
 If the "data type" isn't presented, assume that the data type is word.
 
-Add output of the most common data percentage.
+Add output of the greatest data percentage.
 
 #### Run configuration examples
 ```
@@ -95,14 +95,14 @@ java SimpleDataSorter -dataType word
 #### Output example for words
 ```
 Total words: 7.
-Most common word: 1 (3 times, 43%).
+The longest word: 33 (1 time, 14%).
 ```
 
 #### Output example for lines
 ```
 Total lines: 3.
-Most common line:
-1 -2   33 4
+The longest line:
+1                 1
 (1 time, 33%).
 ```
 
