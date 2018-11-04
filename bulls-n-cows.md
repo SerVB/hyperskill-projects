@@ -198,6 +198,8 @@ So choose the method and rewrite secret generation using it.
 #### Description
 What about making secret code harder to guess? Add support for more than 10 symbols: add letters.
 
+You can use `Set<Character>` to store all symbols of the code. So you are able to check fast if the symbol is presented in the code (= if it is a cow).
+
 #### Game start example
 ```
 Input the length of the secret code:
