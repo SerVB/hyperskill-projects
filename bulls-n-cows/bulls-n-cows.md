@@ -165,7 +165,7 @@ To sum up, implement a playable version of the game.
 ### 5. Different random numbers generation methods
 #### Learn topics
 - [Math library](https://hyperskill.org/learn/lesson/51342/) (and previous topics).
-- [Instance methods](https://hyperskill.org/learn/lesson/63075/) (and previous topics).
+- [Random](https://hyperskill.org/learn/lesson/187778/) (and previous topics).
 
 #### Description
 Actually, the suggested algorithm of secret code generation was a reinvented bicycle.
