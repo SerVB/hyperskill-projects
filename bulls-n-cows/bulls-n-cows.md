@@ -64,6 +64,20 @@ Grade: 4 bulls.
 Congrats! The secret number is 9305.
 ```
 
+#### Output example
+```
+The secret is prepared: ****.
+
+Turn 1. Answer:
+1234
+Grade: nothing.
+
+Turn 2. Answer:
+9876
+Grade: 4 bulls.
+Congrats! The secret number is 9876.
+```
+
 #### Let’s go!
 You can start with the following code. The code prints the first line of the game log. So you can just add printing of other lines.
 
