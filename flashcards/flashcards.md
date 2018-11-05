@@ -107,7 +107,7 @@ Your answer is wrong...
 [Branching statements](https://hyperskill.org/learn/lesson/51351/), [Iterating over arrays](https://hyperskill.org/learn/lesson/59867/), [Fork and pull request](https://hyperskill.org/learn/lesson/159182/).
 
 #### Description
-Implement a working application now! Add support for addition of multiply cards. Then ask user to answer all the definitions.
+Implement a working application now! Add support for addition of multiple cards. Then ask user to answer all the definitions.
 
 You can follow the algorithm. Firstly, ask the user to input the desired number of cards. Then create two string arrays (`String[]`): `cards` and `definitions`. Process all inputted cards and save the i-th card to `cards[i]` and `definitions[i]`. Finally iterate over saved cards and ask the user to answer.
 
