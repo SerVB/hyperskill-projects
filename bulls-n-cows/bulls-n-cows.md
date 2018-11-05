@@ -13,8 +13,7 @@ The project is designed for beginners.
 ## Stages
 ### 1. Game log
 #### Learn topics
-- [Printing data](https://hyperskill.org/learn/lesson/104662/) (and previous topics).
-- [Fork and pull request](https://hyperskill.org/learn/lesson/159182/) (and previous topics).
+[Printing data](https://hyperskill.org/learn/lesson/104662/).
 
 #### Description
 Let's start!  
@@ -78,11 +77,15 @@ Grade: 4 bulls.
 Congrats! The secret number is 9876.
 ```
 
-#### Let’s go!
+#### How to submit?
+This stage is auto-graded. The grader will check that:
+* the last line of your output contains a 4-digit secret number with unique digits,
+* the lines after codes contain a correct grade (the grade is correct if there are pairs of number and word like `X bull` or `X bulls` and if it satisfies the secret number).
+
 You can start with the following code. The code prints the first line of the game log. So you can just add printing of other lines.
 
 ```java
-public final class BullsAndCowsGame {
+final class BullsAndCowsGame {
     public static void main(final String[] args) {
         System.out.println("The secret is prepared: ****.");
     }
@@ -91,7 +94,7 @@ public final class BullsAndCowsGame {
 
 ### 2. Grader
 #### Learn topics
-[Conditional statement](https://hyperskill.org/learn/lesson/51347/) and previous topics.
+[Conditional statement](https://hyperskill.org/learn/lesson/51347/).
 
 #### Description
 In this stage you should write the vital part of the game &mdash; the grader. Use predefined 4-digit number and grade the inputted number (you can do it digit by digit).
@@ -116,10 +119,12 @@ Grade: 1 cow(s). The secret number is 9305.
 Grade: 1 bull(s) and 1 cow(s). The secret number is 9305.
 ```
 
+#### How to submit?
+This stage is auto-graded. The grader will check that the line contains a correct grade (the grade is correct if there are pairs of number and word like `X bull` or `X bulls` and if it satisfies the secret number) and the code is correct.
+
 ### 3. Pseudo random secret number
 #### Learn topics
-- [Naming variables](https://hyperskill.org/learn/lesson/62778/).
-- [Branching statements](https://hyperskill.org/learn/lesson/51351/) (and previous topics).
+[Naming variables](https://hyperskill.org/learn/lesson/62778/), [Branching statements](https://hyperskill.org/learn/lesson/51351/).
 
 #### Description
 Implement pseudo random secret number generation by the given length. If the given length is greater than 10, print a message and don't generate the number.
@@ -127,7 +132,7 @@ Implement pseudo random secret number generation by the given length. If the giv
 We suggest you using the following algorithm of generation.
 
 ```java
-public final class SecretGenerator {
+final class SecretGenerator {
     public static void main(final String[] args) {
         long pseudoRandomNumber = System.nanoTime();
     }
@@ -164,22 +169,27 @@ The random secret number is 52136.
 #### Output example
 ```
 Can't generate a secret number with a length of 100 because there aren't so many unique digits.
-Please input a number not greater than 10. 
+Please input a number not greater than 10.
 ```
+
+#### How to submit?
+This stage is auto-graded. The grader will check that the line contains a code of the given length (if the length isn't greater than 10) and digits of the code are unique.
 
 ### 4. Almost classic game
 #### Learn topics
-[Processing strings](https://hyperskill.org/learn/lesson/59868/) and previous topics.
+[Processing strings](https://hyperskill.org/learn/lesson/59868/), [Fork and pull request](https://hyperskill.org/learn/lesson/159182/).
 
 #### Description
 In this stage you should combine the previous parts to the one. At first, ask the player to input the secret number length. Then ask for answers and grade them. Stop the game when the secret number is guessed.
 
 To sum up, implement a playable version of the game.
 
+#### How to submit?
+Fork the repo TBD. Starting from this stage, you should send a pull request after a stage. 
+
 ### 5. Different random numbers generation methods
 #### Learn topics
-- [Math library](https://hyperskill.org/learn/lesson/51342/) (and previous topics).
-- [Random](https://hyperskill.org/learn/lesson/187778/) (and previous topics).
+[Math library](https://hyperskill.org/learn/lesson/51342/), [Random](https://hyperskill.org/learn/lesson/187778/).
 
 #### Description
 Actually, the suggested algorithm of secret code generation was a reinvented bicycle.
@@ -189,9 +199,9 @@ Research common pseudo random generation methods such as `Math.random()` and `Ra
 Briefly, you can generate next digits by the following code:
 
 ```java
-import java.util.Random;
+import java.util.*;
 
-public final class RandomTest {
+final class RandomTest {
     public static void main(final String[] args) {
         final int nextDigit1 = (int) (Math.random() * 10);  // Number in [0; 9]
         final Random random = new Random();
@@ -207,7 +217,7 @@ So choose the method and rewrite secret generation using it.
 
 ### 6. More complicated secret code
 #### Learn topics
-[Map](https://hyperskill.org/learn/lesson/53858/) and previous topics.
+[Map](https://hyperskill.org/learn/lesson/53858/).
 
 #### Description
 What about making secret code harder to guess? Add support for more than 10 symbols: add letters.
@@ -225,7 +235,7 @@ The secret is prepared: ****** (0-9, a-f).
 
 ### 7. Handle errors
 #### Learn topics
-[Exception handling](https://hyperskill.org/learn/lesson/57387/) and previous topics.
+[Exception handling](https://hyperskill.org/learn/lesson/57387/).
 
 #### Description
 What if someone enters an answer of wrong length?
