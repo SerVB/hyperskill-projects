@@ -6,10 +6,11 @@ The project is designed for beginners.
 ## What Will You Learn?
 - Create a Java console application.
 - Work with standard output and input.
-- Use integer arithmetic.
 - Generate random numbers.
 - Store data in data structures.
+- Work with files.
 - Handle errors.
+- Parse run arguments to set the application behavior.
 
 ## Stages
 ### 1. A card
