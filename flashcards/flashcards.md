@@ -29,7 +29,7 @@ This stage is auto-graded. The grader will check that:
 You can start with the following code. The code prints the first line. So you can just add printing of other lines.
 
 ```java
-public final class Flashcards {
+final class Flashcards {
     public static void main(final String[] args) {
         System.out.println("Card:");
     }
@@ -69,7 +69,7 @@ You can start with the following code. The code reads the first line: the card. 
 ```java
 import java.util.*;
 
-public final class Flashcards {
+final class Flashcards {
     public static void main(final String[] args) {
         final Scanner scanner = new Scanner(System.in);
         
