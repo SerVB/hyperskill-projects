@@ -236,7 +236,7 @@ Answer contains wrong symbols?
 
 Inputted strings aren't numbers?
 
-Let's handle errors like this. For now you are able to implement this without a `try catch` construction. Use the rule: if you can avoid exception-based logic, avoid it! 
+Let's handle errors like this. For now you are able to implement this without a `try catch` construction. Use the rule: if you can avoid exception-based logic, avoid it!
 
 So implement error messages when the input is wrong to protect your program.
 
