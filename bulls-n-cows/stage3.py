@@ -11,7 +11,7 @@ def generate():
         tests.append(test)
         tests.append(test)
 
-    tests.append(("10\n", 11))
+    tests.append(("11\n", 11))
     tests.append(("42\n", 42))
 
     return tests
