@@ -14,6 +14,8 @@ The project is designed for beginners.
 [Printing data](https://hyperskill.org/learn/lesson/104662).
 
 #### Description
+If you don't know what's a numeral system, take a look at [Wikipedia](https://en.wikipedia.org/wiki/Numeral_system).
+
 Implement a program that outputs two numbers: the first number is decimal and the second one is binary. The numbers must be equal. You can choose a number you like.
 
 #### How to submit?
@@ -85,7 +87,7 @@ Number: >42
 [Switch statement](https://hyperskill.org/learn/lesson/51348).
 
 #### Description
-Now let's implement a simple converter. It will convert the given decimal number to the given radix. You should support three radices with prefixes:
+Now let's implement a simple converter. It will convert the given decimal number to the given [radix](https://en.wikipedia.org/wiki/Radix). You should support three radices with prefixes:
 * binary (`0b`),
 * octal (`0`),
 * hexadecimal (`0x`).
