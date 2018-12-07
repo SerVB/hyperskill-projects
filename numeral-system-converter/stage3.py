@@ -46,7 +46,7 @@ def check(reply, clue):
     if len(lines) == 0:
         return (False, "Your output is empty")
 
-    answer = lines[-1]
+    answer = lines[-1].lower()
 
     if answer != clue:
         return (False, "Your answer is wrong: '%s'" % answer)
