@@ -233,3 +233,36 @@ Source number: >11
 Target radix: >2
 1011
 ```
+
+### 6. Handle errors
+#### Learn topics
+[Exception handling](https://hyperskill.org/learn/lesson/57387/).
+
+#### Description
+What if someone enters a wrong radix?
+
+And if the inputted number is impossible in the given radix?
+
+Number is not a number?
+
+Let's handle errors like this. For now you are able to implement this without a `try catch` construction. Use the rule: if you can avoid exception-based logic, avoid it!
+
+So implement error messages when the input is wrong to protect your program.
+
+#### How to submit?
+This stage is auto-graded. The grader will input some data. Then it will check that the last line of your program output contains "error" word if the input has been wrong.
+
+If the input is correct, your program should behave as in the previous stage.
+
+#### Console examples
+Lines with `>` are inputted by a user.
+```
+Source radix: >a b
+Error: "a b" isn't a valid radix. Please input number from 1 to 36.
+```
+
+```
+Source radix: >11
+Source number: >abc
+There is a error: "abc" isn't a valid number in radix 11. Please use only symbols from 1 to A.
+```
