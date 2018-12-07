@@ -14,11 +14,11 @@ def check(reply, clue):
 
     answer = lines[-1]
 
-    if answer != str(clue % 2):
+    if answer != str(clue % 8):
         return (False, "Your answer is wrong: '%s'" % answer)
 
     return (True, "Good job! :)")
 
 
 def solve(dataset):
-    return str(int(dataset.splitlines()[0]) % 2) + "\n"
+    return str(int(dataset.splitlines()[0]) % 8) + "\n"

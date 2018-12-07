@@ -46,15 +46,15 @@ final class NumeralSystemConverter {
 2 is equal to 0b10
 ```
 
-### 2. The last bit
+### 2. The last digit of the octal number
 #### Learn topics
-[Integers in programs](https://hyperskill.org/learn/lesson/51339).
+[Characters](https://hyperskill.org/learn/lesson/51344).
 
 #### Description
-Is the number odd or even? Implement a program that answers to this question for the given number.
+What's the last digit of the given number in [base](https://en.wikipedia.org/wiki/Radix) 8? Implement a program that answers to this question!
 
 #### How to submit?
-This stage is auto-graded. The grader will **input a number** and then check that the **last line of your output** is `1` (for odd) or `0` (for even).
+This stage is auto-graded. The grader will **input a number** in base 10 and then check that the **last line of your output** is equal to the right answer.
 
 You can start with the following code. The code reads the number. So you can just add an output of the answer.
 
@@ -74,12 +74,12 @@ final class NumeralSystemConverter {
 Lines after `>` are inputted by a user.
 ```
 Number: >11
-1
+3
 ```
 
 ```
 Number: >42
-0
+2
 ```
 
 ### 3. Convert decimals
