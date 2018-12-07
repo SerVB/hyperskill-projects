@@ -5,9 +5,13 @@ In this project, you will develop an application that scans Internet pages and s
 - Create a Java application with a Graphical User Interface (GUI).
 - Use a standard library to download HTML pages.
 - Create a regular expression to parse a simple HTML code.
+- Store data in collections.
 - Save files on disk.
 - Work with multiple threads.
+- Compute time.
 - Handle errors.
+- Use Git to manage code versions.
+- Refactor code.
 
 ## Stages
 ### 1. GUI
@@ -128,7 +132,8 @@ Below there is the example of how your new window might look:
 
 ### 4. Links on site
 #### Learn topics
-[Map](https://hyperskill.org/learn/lesson/53858).
+- [Map](https://hyperskill.org/learn/lesson/53858).
+- [Multi-dimensional array](https://hyperskill.org/learn/lesson/51354).
 
 #### Description
 Continue developing the crawler: let's collect all the links to other web pages on the page and their titles.
@@ -153,7 +158,7 @@ Implement the table export: this is useful for sending results to another comput
 
 You can write a file like a set of pairs of lines: every odd line contains a link and the following (even) line contains the title of the web page by the link.
 
-Also, you can update the way you've been creating the `inputStream` to disguise as a human. `URL`'s `openStream()` method is a shorthand for: `openConnection().getInputStream()`. The aim is to specify `user-agent` property as the property in common browser.
+Also, you can update the way you've been creating the `inputStream` to disguise as a human. `URL`'s `openStream()` method is a shorthand for `openConnection().getInputStream()`. The aim is to specify `user-agent` property as the property in common browser.
 
 So receive an object `URLConnection` by `openConnection()` and do `.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0")` for it (it's Firefox running on Windows 10). Then use `.getInputStream()` to pass the connection to the `InputStreanReader`.
 
@@ -167,7 +172,7 @@ Below there is the example of how your new window might look:
 - [Comparing dates and time](https://hyperskill.org/learn/topic/110).
 - [Concurrent queues](https://hyperskill.org/learn/topic/305).
 
-#### Description.
+#### Description
 At the final stage, implement a real web crawler!
 
 We suggest you using the following algorithm.
@@ -182,7 +187,7 @@ To sum up, add the following components to your window:
 - The number of threads-workers.
 - Two checkable restrictions:
     - Maximum crawling depth: if enabled, workers won't go too deep in the Internet.
-    - Time limit: if enabled, workers won't add task after the given time.
+    - Time limit: if enabled, workers won't add tasks after the given time.
 - A `JToggleButton` Run/Stop to toggle crawling process (the button should deactivate automatically if a restriction becomes valid or there is no task in the task queue).
 - Metrics like elapsed time and parsed page count.
 
