@@ -179,13 +179,11 @@ You can use the following algorithm.
 
 Interpret the source number as a string $\overline{int.frac}_{base}$ and parse integer and fraction independently.
 
-Save the integer part as a `long` using formula like $i \cdot {base}^2 + n \cdot {base}^1 + t \cdot {base}^0$.
+Save the integer part as a `long` using the standard library.
 
 Save the fractional part as a `double` using formula like $\frac{f}{{base}^1} + \frac{r}{{base}^2} + \frac{a}{{base}^3} + \frac{c}{{base}^4}$.
 
 Of course, you should support numbers of bigger length.
-
-Then you can get the target number integer part using the standard library.
 
 To compute symbols of the target number fractional part, multiply it to $targetRadix$ and get fraction symbol-by-symbol. Here is an example:
 
