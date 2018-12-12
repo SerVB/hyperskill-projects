@@ -121,12 +121,20 @@ Below there is the example of how your window might look:
 [Match results](https://hyperskill.org/learn/lesson/98341).
 
 #### Description
+As you see on the previous stage, an HTML code contains many symbols `<` and `>`. These symbols declare tags. So HTML consists of tags. There are two types of tags:
+- Tags-containers like pairs of a start-tag `<title>` and an end-tag `</title>` (this one is used to set a page title). Usually, there is a content placed inside containers. 
+- Empty-element tags like `<img src="LINK" />` (this one is used for inserting images). The only way to customize these tags is attributes addition.
+
+Start-tags and empty-element tags can contain attributes. Attributes are pairs of attribute name and attribute value. You see attribute `src="LINK"` in `img` tag. It can also be written as `src='LINK'`.
+
+You can read more about HTML for example [here](https://en.wikipedia.org/wiki/HTML).
+
 Implement parsing of the site title. Find the `<title>` tag in the site text and output it to a special component. You can use a regular expression to catch that simple string.
 
 Enhance your window: add some more components.
 
 #### Example
-Below there is the example of how your new window might look:
+Below there is an example of how your new window might look. Here site has tag `<title>Example Domain</title>`:
 
 ![stage3](stage3.png)
 
@@ -140,9 +148,16 @@ Continue developing the crawler: let's collect all the links to other web pages 
 
 As you may know, links in HTML are tags like `<a href="LINK">`, where `LINK` is obviously an URL and quotes can be single (`'`) or double (`"`).
 
-Don't forget that there are not only links to web pages. Also, there are images, music, video, and so on. Handle these cases.   
+The link can be presented in many ways:
+- An absolute link like `https://www.wikipedia.org/index.html`.
+- A relative link like `page.html`. It doesn't contain slashes. To get an absolute link you should cut the original link to the last slash and add this relative link: `https://www.wikipedia.org/index.html` => `page.html` = `https://www.wikipedia.org/page.html`.
+- A link without protocol like `//en.wikipedia.org/` or `en.wikipedia.org/`. Here you need just to add protocol of original page: `http` or `https`.
+
+Don't forget that there are not only links to web pages. Also, there are images, music, video, and so on. Handle these cases: update page download code. `URL`'s `openStream()` method is a shorthand for `openConnection().getInputStream()`. So receive an object `URLConnection` by `openConnection()` and check its `getContentType()`. It must be equal to `"text/html"`. Then use `.getInputStream()` to pass the connection to the `InputStreamReader`.
 
 Then display a `JTable` with this data: the first column is the link, the second one is its title.
+
+Put the `JTable` in a `JScrollPane` so the `JTable` header will be shown.
 
 #### Example
 Below there is the example of how your new window might look:
@@ -158,9 +173,9 @@ Implement the table export: this is useful for sending results to another comput
 
 You can write a file like a set of pairs of lines: every odd line contains a link and the following (even) line contains the title of the web page by the link.
 
-Also, you can update the way you've been creating the `inputStream` to disguise as a human. `URL`'s `openStream()` method is a shorthand for `openConnection().getInputStream()`. The aim is to specify `user-agent` property as the property in common browser.
+Also, you can update the way you've been creating the `URLConnection` to disguise as a human because many sites can send a wrong HTML code if they understand that the query is sent by a bot. The aim is to specify `user-agent` property as the property in common browser.
 
-So receive an object `URLConnection` by `openConnection()` and do `.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0")` for it (it's Firefox running on Windows 10). Then use `.getInputStream()` to pass the connection to the `InputStreanReader`.
+Do `.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0")` for an `URLConnection` object. It's like Firefox running on Windows 10. So most sites will treat the bot as a human.
 
 #### Example
 Below there is the example of how your new window might look:
@@ -175,7 +190,7 @@ Below there is the example of how your new window might look:
 #### Description
 At the final stage, implement a real web crawler!
 
-We suggest you using the following algorithm.
+We suggest you use the following algorithm.
 
 Create some threads-workers which wait for new tasks in the task queue. A task is an URL. If a thread-worker gets a task, it goes to the page, saves its title, collects all links on the page, and adds this links as new tasks to the task queue.
 
