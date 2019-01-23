@@ -104,7 +104,7 @@ def check(reply, clue):
         if "error" in answer.split():
             return (True, "Good job! :)")
         else:
-            return (False, "Your program doesn't say about a error...")
+            return (False, "Your program doesn't say about an error...")
 
     if answer != clue:
         return (False, "Your answer is wrong: '%s'" % answer)
