@@ -6,10 +6,22 @@ import java.util.stream.Collectors;
 class Clue {
     // you can store here any variables you need for test
 
+    final String input;
     final String answer;
+    final boolean provideAnswer;
 
-    Clue(String answer) {
+    Clue(final String input, final String answer, final boolean provideAnswer) {
+        this.input = input;
         this.answer = answer;
+        this.provideAnswer = provideAnswer;
+    }
+
+    Clue(final String input, final String answer) {
+        this(input, answer, false);
+    }
+
+    Clue(final String input) {
+        this(input, null, false);
     }
 }
 
@@ -66,24 +78,69 @@ class SampleTest {
     // you allowed to store information between tests and use it
     static String variableAccessibleBetweenTests = "";
 
+    static Test testToAnswer(final String input, final String answer, final boolean provideAnswer) {
+        return new Test(input, new Clue(input, answer, provideAnswer));
+    }
+
     public static Test[] generate() {
         return new Test[]{
-                new Test("a b\n\n\n"),
-                new Test("11\nabc\n\n"),
-                new Test("11\n1\ndas\n"),
-                new Test("0\n1\ndas\n"),
-                new Test("37\n1\ndas\n"),
-                new Test("36\n1\n0\n"),
-                new Test("36\n1\n37\n"),
+                /* Tests with a hint: */
+                testToAnswer("a b\n\n\n", null, true),
+                testToAnswer("11\nabc\n\n", null, true),
+                testToAnswer("11\n1\ndas\n", null, true),
+                testToAnswer("0\n1\ndas\n", null, true),
+                testToAnswer("37\n1\ndas\n", null, true),
+                testToAnswer("36\n1\n0\n", null, true),
+                testToAnswer("36\n1\n37\n", null, true),
 
-                new Test("10\n0.234\n7", new Clue("0.14315")),
-                new Test("10\n10.234\n7", new Clue("13.14315")),
-                new Test("6\n2.555\n1", new Clue("11")),
-                new Test("35\naf.xy\n17", new Clue("148.g88a8")),
-                new Test("10\n11\n2", new Clue("1011")),
-                new Test("16\naaaaa.0\n24", new Clue("22df2.00000")),
-                new Test("16\n0.cdefb\n24", new Clue("0.j78da")),
-                new Test("16\naaaaa.cdefb\n24", new Clue("22df2.j78da")),
+                /* Tests without a hint: */
+                testToAnswer("c\n\n\n", null, false),
+                testToAnswer("12\nbc\n\n", null, false),
+                testToAnswer("12\n1\nhf\n", null, false),
+                testToAnswer("0\n2\nhf\n", null, false),
+                testToAnswer("37\n2\nhf\n", null, false),
+                testToAnswer("14\n2\n-1\n", null, false),
+                testToAnswer("14\n2\n38\n", null, false),
+
+                /* Tests from previous stage (with a hint): */
+                testToAnswer("10\n0.234\n7", "0.14315", true),
+                testToAnswer("10\n10.234\n7", "13.14315", true),
+                testToAnswer("6\n2.555\n1", "11", true),
+                testToAnswer("35\naf.xy\n17", "148.g88a8", true),
+                testToAnswer("10\n11\n2", "1011", true),
+                testToAnswer("16\naaaaa.0\n24", "22df2.00000", true),
+                testToAnswer("16\n0.cdefb\n24", "0.j78da", true),
+                testToAnswer("16\naaaaa.cdefb\n24", "22df2.j78da", true),
+
+                /* Tests from previous stage (without a hint): */
+                testToAnswer("10\n0.2340\n7", "0.14315", false),
+                testToAnswer("10\n10.2340\n7", "13.14315", false),
+                testToAnswer("6\n2.5550\n1", "11", false),
+                testToAnswer("35\naf.xy0\n17", "148.g88a8", false),
+                testToAnswer("10\n12\n2", "1100", false),
+                testToAnswer("16\naaaaa.00\n24", "22df2.00000", false),
+                testToAnswer("16\n0.cdefb0\n24", "0.j78da", false),
+                testToAnswer("16\naaaaa.cdefb0\n24", "22df2.j78da", false),
+
+                /* Tests from previous stage (with a hint): */
+                testToAnswer("10\n11\n2\n", "1011", true),
+                testToAnswer("1\n11111\n10\n", "5", true),
+                testToAnswer("10\n1000\n36\n", "rs", true),
+                testToAnswer("21\n4242\n6\n", "451552", true),
+                testToAnswer("7\n12\n11\n", "9", true),
+                testToAnswer("5\n300\n10\n", "75", true),
+                testToAnswer("1\n11111\n5\n", "10", true),
+                testToAnswer("10\n4\n1\n", "1111", true),
+
+                /* Tests from previous stage (without a hint): */
+                testToAnswer("10\n12\n2\n", "1100", false),
+                testToAnswer("1\n1111111\n10\n", "7", false),
+                testToAnswer("10\n1001\n36\n", "rt", false),
+                testToAnswer("21\n4243\n6\n", "451553", false),
+                testToAnswer("7\n13\n11\n", "a", false),
+                testToAnswer("5\n301\n10\n", "76", false),
+                testToAnswer("1\n111111\n5\n", "11", false),
+                testToAnswer("10\n5\n1\n", "11111", false),
         };
     }
 
@@ -105,22 +162,41 @@ class SampleTest {
 
         final String answer = lines[lines.length - 1];
 
-        if (clue == null) {
+        if (clue.answer == null) {
             if (answer.toLowerCase().contains("error")) {
                 return new CheckResult(true);
+            } else if (clue.provideAnswer) {
+                return new CheckResult(
+                        false,
+                        "Your program doesn't say about an error.\n" +
+                                "This is a sample test so we give you a hint.\n" +
+                                "Input: " + clue.input + "\n" +
+                                "Your answer: " + answer
+                );
             } else {
                 return new CheckResult(
                         false,
-                        "Your program doesn't say about an error..."
+                        "Your program doesn't say about an error."
                 );
             }
         }
 
         if (!answer.equals(clue.answer)) {
-            return new CheckResult(
-                    false,
-                    String.format("Your answer is wrong (%s).", answer)  // TODO: Is it OK to print user's answer? He/She can be a cheater and print input.
-            );
+            if (clue.provideAnswer) {
+                return new CheckResult(
+                        false,
+                        "Your program gives a wrong answer when there is no error in the input.\n" +
+                                "This is a sample test so we give you a hint.\n" +
+                                "Input: " + clue.input + "\n" +
+                                "Your answer: " + answer + "\n" +
+                                "Correct answer: " + clue.answer
+                );
+            } else {
+                return new CheckResult(
+                        false,
+                        "Your program gives a wrong answer when there is no error in the input."
+                );
+            }
         }
 
         // means the user passed this test

@@ -6,10 +6,22 @@ import java.util.stream.Collectors;
 class Clue {
     // you can store here any variables you need for test
 
+    final String input;
     final String answer;
+    final boolean provideAnswer;
 
-    Clue(String answer) {
+    Clue(final String input, final String answer, final boolean provideAnswer) {
+        this.input = input;
         this.answer = answer;
+        this.provideAnswer = provideAnswer;
+    }
+
+    Clue(final String input, final String answer) {
+        this(input, answer, false);
+    }
+
+    Clue(final String input) {
+        this(input, null, false);
     }
 }
 
@@ -76,26 +88,38 @@ class SampleTest {
         }
     }
 
-    public static Test[] generate() {
-        final List<Integer> tests = new ArrayList<>();
-        tests.add(11);
-        tests.add(8);
-        tests.add(0);
+    public static List<Test> iToTest(final int i, final boolean provideAnswer) {
+        final List<Test> tests = new ArrayList<>();
 
-        for (int i = 101; i <= 104; ++i) {
-            tests.add(i);
+        for (final int base : new int[]{16, 8, 2}) {
+            final String answer = prefix(base) + Integer.toString(i, base);
+            final String input = i + "\n" + base;
+
+            tests.add(
+                    new Test(
+                            input,
+                            new Clue(input, answer, provideAnswer)
+                    )
+            );
         }
 
-        return tests
-                .stream()
-                .flatMap(i -> Arrays
-                        .stream(new int[]{16, 8, 2})
-                        .mapToObj(base -> new Test(
-                                "" + i + "\n" + base + "\n",
-                                new Clue(prefix(base) + Integer.toString(i, base))
-                        ))
-                )
-                .toArray(Test[]::new);
+        return tests;
+    }
+
+    public static Test[] generate() {
+        final List<Test> tests = new ArrayList<>();
+
+        /* Tests with a hint: */
+        tests.addAll(iToTest(11, true));
+        tests.addAll(iToTest(8, true));
+        tests.addAll(iToTest(0, true));
+
+        /* Tests without a hint: */
+        for (int i = 101; i <= 104; ++i) {
+            tests.addAll(iToTest(i, true));
+        }
+
+        return tests.toArray(Test[]::new);
     }
 
     public static CheckResult check(String reply, Clue clue) {
@@ -117,10 +141,21 @@ class SampleTest {
         final String answer = lines[lines.length - 1];
 
         if (!answer.equals(clue.answer)) {
-            return new CheckResult(
-                    false,
-                    String.format("Your answer is wrong (%s).", answer)  // TODO: Is it OK to print user's answer? He/She can be a cheater and print input.
-            );
+            if (clue.provideAnswer) {
+                return new CheckResult(
+                        false,
+                        "Your answer is wrong.\n" +
+                                "This is a sample test so we give you a hint.\n" +
+                                "Input: " + clue.input + "\n" +
+                                "Your answer: " + answer + "\n" +
+                                "Correct answer: " + clue.answer
+                );
+            } else {
+                return new CheckResult(
+                        false,
+                        "Your answer is wrong."
+                );
+            }
         }
 
         // means the user passed this test

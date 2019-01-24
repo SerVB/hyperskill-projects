@@ -6,10 +6,22 @@ import java.util.stream.Collectors;
 class Clue {
     // you can store here any variables you need for test
 
+    final String input;
     final String answer;
+    final boolean provideAnswer;
 
-    Clue(String answer) {
+    Clue(final String input, final String answer, final boolean provideAnswer) {
+        this.input = input;
         this.answer = answer;
+        this.provideAnswer = provideAnswer;
+    }
+
+    Clue(final String input, final String answer) {
+        this(input, answer, false);
+    }
+
+    Clue(final String input) {
+        this(input, null, false);
     }
 }
 
@@ -66,28 +78,31 @@ class SampleTest {
     // you allowed to store information between tests and use it
     static String variableAccessibleBetweenTests = "";
 
+    public static Test iToTest(final int i, final boolean provideAnswer) {
+        final String octal = Integer.toString(i, 8);
+        final String octalLast = octal.substring(octal.length() - 1);
+        final String input = Integer.toString(i);
+
+        return new Test(
+                input,
+                new Clue(input, octalLast, provideAnswer)
+        );
+    }
+
     public static Test[] generate() {
-        final List<Integer> tests = new ArrayList<>();
+        final List<Test> tests = new ArrayList<>();
 
+        /* Tests with a hint: */
         for (int i = 0; i <= 10; ++i) {
-            tests.add(i);
+            tests.add(iToTest(i, true));
         }
 
+        /* Tests without a hint: */
         for (int i = 2340; i <= 2350; ++i) {
-            tests.add(i);
+            tests.add(iToTest(i, false));
         }
 
-        return tests
-                .stream()
-                .map(i -> {
-                    final String octal = Integer.toString(i, 8);
-
-                    return new Test(
-                            Integer.toString(i),
-                            new Clue(octal.substring(octal.length() - 1))
-                    );
-                })
-                .toArray(Test[]::new);
+        return tests.toArray(Test[]::new);
     }
 
     public static CheckResult check(String reply, Clue clue) {
@@ -109,10 +124,21 @@ class SampleTest {
         final String answer = lines[lines.length - 1];
 
         if (!answer.equals(clue.answer)) {
-            return new CheckResult(
-                    false,
-                    String.format("Your answer is wrong (%s).", answer)  // TODO: Is it OK to print user's answer? He/She can be a cheater and print input.
-            );
+            if (clue.provideAnswer) {
+                return new CheckResult(
+                        false,
+                        "Your answer is wrong.\n" +
+                                "This is a sample test so we give you a hint.\n" +
+                                "Input: " + clue.input + "\n" +
+                                "Your answer: " + answer + "\n" +
+                                "Correct answer: " + clue.answer
+                );
+            } else {
+                return new CheckResult(
+                        false,
+                        "Your answer is wrong."
+                );
+            }
         }
 
         // means the user passed this test

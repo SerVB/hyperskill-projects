@@ -1,4 +1,5 @@
 import java.io.*;
+import java.math.BigInteger;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -88,7 +89,10 @@ class SampleTest {
         if (lines.length != 1) {
             return new CheckResult(
                     false,
-                    String.format("Your program doesn't print a single line (%d).", lines.length)
+                    String.format(
+                            "Your program doesn't print exactly one line. A number of lines found: %d.",
+                            lines.length
+                    )
             );
         }
 
@@ -101,13 +105,14 @@ class SampleTest {
                 .stream()
                 .filter(word -> word.startsWith(BINARY_PREFIX))
                 .map(word -> word.split(BINARY_PREFIX)[1])
+                .filter(word -> word.chars().mapToObj(i -> (char) i).allMatch(c -> c == '1' || c == '0'))
                 .toArray(String[]::new);
 
         if (binaries.length != 1) {
             return new CheckResult(
                     false,
                     String.format(
-                            "Your output doesn't contain a single binary. Binaries have been found: %s.",
+                            "Your output doesn't contain exactly one binary. Binaries have been found: %s.",
                             Arrays.toString(binaries)
                     )
             );
@@ -122,15 +127,15 @@ class SampleTest {
             return new CheckResult(
                     false,
                     String.format(
-                            "Your output doesn't contain a single number. Numbers have been found: %s.",
+                            "Your output doesn't contain exactly one number. Numbers have been found: %s.",
                             Arrays.toString(binaries)
                     )
             );
         }
 
 
-        final Integer binary = Integer.parseInt(binaries[0], 2);
-        final Integer number = Integer.parseInt(numbers[0], 10);
+        final BigInteger binary = new BigInteger(binaries[0], 2);
+        final BigInteger number = new BigInteger(numbers[0], 10);
 
         if (!binary.equals(number)) {
             return new CheckResult(
