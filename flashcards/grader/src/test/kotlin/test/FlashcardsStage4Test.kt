@@ -23,6 +23,19 @@ class FlashcardsStage4Test : MainMethodTest<FlashcardsStage4Clue>(Solution4::cla
                 true
             ),
             createTestCase(
+                "4\n" +
+                        "11\n21\n" +
+                        "12\n22\n" +
+                        "12\n" +
+                        "13\n23\n" +
+                        "14\n24\n" +
+                        "21\n" +
+                        "22\n" +
+                        "33333\n" +
+                        "24\n",
+                true
+            ),
+            createTestCase(
                 "2\n" +
                         "black\nwhite\n" +
                         "black\n" +
@@ -74,19 +87,6 @@ class FlashcardsStage4Test : MainMethodTest<FlashcardsStage4Clue>(Solution4::cla
                         "22\n" +
                         "33333\n" +
                         "24\n"
-            ),
-            createTestCase(
-                "4\n" +
-                        "11\n21\n" +
-                        "12\n22\n" +
-                        "12\n" +
-                        "13\n23\n" +
-                        "14\n24\n" +
-                        "21\n" +
-                        "22\n" +
-                        "33333\n" +
-                        "24\n",
-                true
             )
         )
     }
