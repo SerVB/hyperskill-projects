@@ -297,8 +297,6 @@ class Ask(private val answers: List<String>) : Action() {
     override fun check(revealTest: Boolean, cards: Cards, replyLines: List<String>): ActionCheckResult {
         val questionCount = answers.size
 
-        val askedCards = mutableSetOf<String>()
-
         val questions = replyLines.takeLast(questionCount + 1).take(questionCount)
         val grades = replyLines.takeLast(questionCount)
 
@@ -311,8 +309,6 @@ class Ask(private val answers: List<String>) : Action() {
             val hasWrong = WRONG.toLowerCase() in grade.toLowerCase()
 
             val card = question.substringBeforeLast('"').substringAfterLast('"')
-
-            askedCards.add(card)
 
             val correctAnswer = cards.cardToDefinition[card] == answer
 
@@ -398,17 +394,6 @@ class Ask(private val answers: List<String>) : Action() {
                         ActionCheckResult(false)
                     }
                 }
-            }
-        }
-
-        if (askedCards.size != questionCount) {
-            return if (revealTest) {
-                ActionCheckResult(
-                    false,
-                    "You haven't asked about some cards: ${cards.cardToDefinition.keys - askedCards}."
-                )
-            } else {
-                ActionCheckResult(false, "You haven't asked about some cards")
             }
         }
 
