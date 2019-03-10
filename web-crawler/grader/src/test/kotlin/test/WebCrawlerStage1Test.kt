@@ -1,15 +1,20 @@
 package test
 
+import org.assertj.swing.fixture.JTextComponentFixture
 import org.hyperskill.hstest.dev.stage.SwingTest
 import org.hyperskill.hstest.dev.testcase.CheckResult
 import org.hyperskill.hstest.dev.testcase.TestCase
 import solution.Solution1
 
-class WebCrawlerStage1Test : PublicSwingTest<WebCrawlerClue>(Solution1()) {
+class WebCrawlerStage1Test : SwingTest<WebCrawlerClue>(Solution1()) {
 
     override fun generateTestCases(): List<TestCase<WebCrawlerClue>> {
-        return commonTests(swingTest = this) +
-                stage1Tests(swingTest = this, textAreaName = "TextArea")
+        val textArea = ComponentRequirements("TextArea", isEnabled = false) { window.textBox(it) }
+
+        return frameTests(::frame) +
+                existenceTests(textArea) +
+                componentsAreEnabledTests(textArea) +
+                stage1Tests(textAreaRequirements = textArea)
     }
 
     override fun check(reply: String, clue: WebCrawlerClue): CheckResult {
@@ -17,19 +22,12 @@ class WebCrawlerStage1Test : PublicSwingTest<WebCrawlerClue>(Solution1()) {
     }
 }
 
-fun stage1Tests(
-    swingTest: PublicSwingTest<WebCrawlerClue>,
-    textAreaName: String
-): List<TestCase<WebCrawlerClue>> {
+fun stage1Tests(textAreaRequirements: ComponentRequirements<JTextComponentFixture>): List<TestCase<WebCrawlerClue>> {
     return listOf(
-        createWebCrawlerTest("There is no text component with the '$textAreaName' name") {
-            SwingTest.checkExistence { swingTest.window.textBox(textAreaName) }
-        },
-        createWebCrawlerTest("'$textAreaName' should be disabled") {
-            !(swingTest.window.textBox(textAreaName).isEnabled)
-        },
-        createWebCrawlerTest("'$textAreaName' should contain text 'HTML code?'") {
-            "html code?" in swingTest.window.textBox(textAreaName).text()?.toLowerCase().orEmpty()
+        createWebCrawlerTest("'${textAreaRequirements.name}' should contain text 'HTML code?'") {
+            val textArea = requireExistingComponent(textAreaRequirements)
+
+            return@createWebCrawlerTest "html code?" in textArea.text()?.toLowerCase().orEmpty()
         }
     )
 }

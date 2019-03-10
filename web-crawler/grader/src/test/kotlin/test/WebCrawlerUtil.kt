@@ -1,15 +1,10 @@
 package test
 
-import org.assertj.swing.fixture.FrameFixture
-import org.hyperskill.hstest.dev.stage.SwingTest
+import org.assertj.swing.fixture.AbstractJComponentFixture
 import org.hyperskill.hstest.dev.testcase.CheckResult
 import org.hyperskill.hstest.dev.testcase.TestCase
-import javax.swing.JFrame
 
-abstract class PublicSwingTest<AttachType>(frame: JFrame) : SwingTest<AttachType>(frame) {
-    val frame: JFrame get() = super.frame
-    val window: FrameFixture get() = super.window
-}
+const val PORT = 25555
 
 class WebCrawlerClue(val feedback: String, val checker: () -> Boolean)
 
@@ -33,17 +28,18 @@ fun checkWebCrawlerTest(reply: String, clue: WebCrawlerClue): CheckResult {
     }
 }
 
-fun commonTests(swingTest: PublicSwingTest<WebCrawlerClue>): List<TestCase<WebCrawlerClue>> {
-    return listOf(
-        createWebCrawlerTest("Window is not visible") { swingTest.frame.isVisible },
-        createWebCrawlerTest("Window title is empty") { swingTest.frame.title.isNotEmpty() }
-    )
-}
-
 fun htmlTextsAreEqual(source: String, inTextField: String): Boolean {
     fun String.formatted(): String {
         return this.trim().replace("\r\n", "\n").replace("\r", "\n")
     }
 
     return source.formatted() == inTextField.formatted()
+}
+
+fun <ComponentType : AbstractJComponentFixture<*, *, *>> requireExistingComponent(
+    requirements: ComponentRequirements<ComponentType>
+): ComponentType {
+    return requireNotNull(requirements.suitableComponent) {
+        "Must check for the '${requirements.name}' component existence before this test"
+    }
 }

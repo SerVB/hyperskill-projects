@@ -5,15 +5,18 @@ import org.hyperskill.hstest.dev.testcase.TestCase
 
 fun <AttachType> TestCase<AttachType>.withLocalhostPagesOn(port: Int): TestCase<AttachType> {
     val webServerMock = WebServerMock(port).apply {
-        pages.forEach { url, content -> setPage(url, content) }
+        pages.forEach { url, (_, content) -> setPage(url, content) }
     }
 
     return this.runWith(webServerMock)
 }
 
+data class PageAndTitle(val title: String, val content: String)
+
 val pages = mapOf(
-    "/example.com" to """
-<!doctype html>
+    "/example.com" to PageAndTitle(
+        "Example Domain",
+        """<!doctype html>
 <html>
 <head>
     <title>Example Domain</title>
@@ -62,6 +65,6 @@ val pages = mapOf(
     <p><a href="/unavailablePage">More information...</a></p>
 </div>
 </body>
-</html>
-    """
+</html>"""
+    )
 )
