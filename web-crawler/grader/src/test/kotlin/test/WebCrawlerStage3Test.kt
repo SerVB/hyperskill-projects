@@ -42,7 +42,7 @@ fun stage3Tests(
     locationTextFieldRequirements: ComponentRequirements<JTextComponentFixture>
 ): List<TestCase<WebCrawlerClue>> {
     return listOf(
-        createWebCrawlerTest("HTML code your app shows is wrong") {
+        createWebCrawlerTest("Title your app shows is wrong") {
             val locationTextField = requireExistingComponent(locationTextFieldRequirements)
             val getTextButton = requireExistingComponent(getTextButtonRequirements)
             val titleLabel = requireExistingComponent(titleLabelRequirements)
