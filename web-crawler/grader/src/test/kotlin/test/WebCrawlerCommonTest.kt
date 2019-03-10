@@ -32,3 +32,18 @@ fun checkWebCrawlerTest(reply: String, clue: WebCrawlerClue): CheckResult {
         CheckResult(false, clue.feedback)
     }
 }
+
+fun commonTests(swingTest: PublicSwingTest<WebCrawlerClue>): List<TestCase<WebCrawlerClue>> {
+    return listOf(
+        createWebCrawlerTest("Window is not visible") { swingTest.frame.isVisible },
+        createWebCrawlerTest("Window title is empty") { swingTest.frame.title.isNotEmpty() }
+    )
+}
+
+fun htmlTextsAreEqual(source: String, inTextField: String): Boolean {
+    fun String.formatted(): String {
+        return this.trim().replace("\r\n", "\n").replace("\r", "\n")
+    }
+
+    return source.formatted() == inTextField.formatted()
+}

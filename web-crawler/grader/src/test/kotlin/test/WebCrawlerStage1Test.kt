@@ -8,7 +8,8 @@ import solution.Solution1
 class WebCrawlerStage1Test : PublicSwingTest<WebCrawlerClue>(Solution1()) {
 
     override fun generateTestCases(): List<TestCase<WebCrawlerClue>> {
-        return stage1Tests(swingTest = this, textAreaName = "TextArea")
+        return commonTests(swingTest = this) +
+                stage1Tests(swingTest = this, textAreaName = "TextArea")
     }
 
     override fun check(reply: String, clue: WebCrawlerClue): CheckResult {
@@ -16,13 +17,11 @@ class WebCrawlerStage1Test : PublicSwingTest<WebCrawlerClue>(Solution1()) {
     }
 }
 
-private fun stage1Tests(
+fun stage1Tests(
     swingTest: PublicSwingTest<WebCrawlerClue>,
     textAreaName: String
 ): List<TestCase<WebCrawlerClue>> {
     return listOf(
-        createWebCrawlerTest("Window is not visible") { swingTest.frame.isVisible },
-        createWebCrawlerTest("Window title is empty") { swingTest.frame.title.isNotEmpty() },
         createWebCrawlerTest("There is no text component with the '$textAreaName' name") {
             SwingTest.checkExistence { swingTest.window.textBox(textAreaName) }
         },
