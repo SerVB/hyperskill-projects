@@ -19,7 +19,7 @@ dependencies {
 
     testImplementation 'com.github.stefanbirkner:system-rules:1.19.0'
     testImplementation 'org.assertj:assertj-swing-junit:3.8.0'
-    testImplementation 'com.github.hyperskill:hs-test:63377f08bc1c1ac8aaf3338791198483dc6822e5'
+    testImplementation 'com.github.hyperskill:hs-test:5cb140b2424e706014faf73846c8cd1ae1c648ba'
 }
 
 compileKotlin {
