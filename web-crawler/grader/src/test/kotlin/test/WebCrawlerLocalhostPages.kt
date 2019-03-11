@@ -5,16 +5,16 @@ import org.hyperskill.hstest.dev.testcase.TestCase
 
 fun <AttachType> TestCase<AttachType>.withLocalhostPagesOn(port: Int): TestCase<AttachType> {
     val webServerMock = WebServerMock(port).apply {
-        pages.forEach { url, (_, content) -> setPage(url, content) }
+        pages.forEach { _, (_, content, relativeUrl) -> setPage(relativeUrl, content) }
     }
 
     return this.runWith(webServerMock)
 }
 
-data class PageAndTitle(val title: String, val content: String)
+data class PageProperties(val title: String, val content: String, val relativePath: String, val childUrls: Set<String>)
 
 val pages = mapOf(
-    "/example.com" to PageAndTitle(
+    localhost(PORT, "/exampleDotCom") to PageProperties(
         "Example Domain",
         """<!doctype html>
 <html>
@@ -59,12 +59,63 @@ val pages = mapOf(
 
 <body>
 <div>
-    <h1>Example Domain</h1>
+    <h1>Example of Example Domain</h1>
     <p>This domain is established to be used for illustrative examples in documents. You may use this
     domain in examples without prior coordination or asking for permission.</p>
-    <p><a href="/unavailablePage">More information...</a></p>
+    <p><a href="unavailablePage">More information...</a></p>
 </div>
 </body>
-</html>"""
+</html>""",
+        "/exampleDotCom",
+        setOf(localhost(PORT, "/unavailablePage"))
+    ),
+    localhost(PORT, "/circular1") to PageProperties(
+        "circular1tiTle",
+        """
+            |<!doctype html>
+            |<html>
+            |<head>
+            |<title>circular1tiTle</title>
+            |</head>
+            |<body>
+            |<a href="circular2">link1</a>
+            |</body>
+            |</html>
+        """.trimMargin(),
+        "/circular1",
+        setOf(localhost(PORT, "/circular2"))
+    ),
+    localhost(PORT, "/circular2") to PageProperties(
+        "circular2tiTle",
+        """
+            |<!doctype html>
+            |<html>
+            |<head>
+            |<title>circular2tiTle</title>
+            |</head>
+            |<body>
+            |<a href="circular3">link1</a>
+            |</body>
+            |</html>
+        """.trimMargin(),
+        "/circular2",
+        setOf(localhost(PORT, "/circular3"))
+    ),
+    localhost(PORT, "/circular3") to PageProperties(
+        "circular3tiTle",
+        """
+            |<!doctype html>
+            |<html>
+            |<head>
+            |<title>circular3tiTle</title>
+            |</head>
+            |<body>
+            |<a href="circular1">link</a>
+            |<a href="exampleDotCom">link</a>
+            |</body>
+            |</html>
+        """.trimMargin(),
+        "/circular3",
+        setOf(localhost(PORT, "/circular1"), localhost(PORT, "/exampleDotCom"))
     )
 )

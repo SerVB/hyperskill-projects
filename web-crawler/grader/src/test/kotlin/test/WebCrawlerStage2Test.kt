@@ -11,8 +11,8 @@ class WebCrawlerStage2Test : SwingTest<WebCrawlerClue>(Solution2()) {
 
     override fun generateTestCases(): List<TestCase<WebCrawlerClue>> {
         val htmlText = ComponentRequirements("HtmlTextArea", isEnabled = false) { window.textBox(it) }
-        val urlText = ComponentRequirements("LocationTextField", isEnabled = true) { window.textBox(it) }
-        val getButton = ComponentRequirements("GetTextButton", isEnabled = true) { window.button(it) }
+        val urlText = ComponentRequirements("UrlTextField", isEnabled = true) { window.textBox(it) }
+        val getButton = ComponentRequirements("RunButton", isEnabled = true) { window.button(it) }
 
         return frameTests(::frame) +
                 existenceTests(htmlText, urlText, getButton) +
@@ -36,22 +36,23 @@ fun stage2Tests(
 ): List<TestCase<WebCrawlerClue>> {
     return listOf(
         createWebCrawlerTest("HTML code your app shows is wrong") {
-            val locationTextField = requireExistingComponent(locationTextFieldRequirements)
-            val getTextButton = requireExistingComponent(getTextButtonRequirements)
-            val htmlTextArea = requireExistingComponent(htmlTextAreaRequirements)
+            val locationTextField = locationTextFieldRequirements.requireExistingComponent()
+            val getTextButton = getTextButtonRequirements.requireExistingComponent()
+            val htmlTextArea = htmlTextAreaRequirements.requireExistingComponent()
 
             return@createWebCrawlerTest pages
                 .asSequence()
-                .map { (url, pageAndText) ->
-                    locationTextField.setText("http://localhost:$PORT$url")
+                .map { (url, pageProperties) ->
+                    locationTextField.setText(url)
 
                     getTextButton.click()
 
                     val textInTextArea = htmlTextArea.text().orEmpty()
 
-                    return@map htmlTextsAreEqual(pageAndText.content, textInTextArea)
+                    return@map htmlTextsAreEqual(pageProperties.content, textInTextArea)
                 }
                 .all { it }
+                .toCheckResult()
         }.withLocalhostPagesOn(PORT)
     )
 }

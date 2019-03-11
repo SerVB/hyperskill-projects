@@ -25,9 +25,9 @@ class WebCrawlerStage1Test : SwingTest<WebCrawlerClue>(Solution1()) {
 fun stage1Tests(textAreaRequirements: ComponentRequirements<JTextComponentFixture>): List<TestCase<WebCrawlerClue>> {
     return listOf(
         createWebCrawlerTest("'${textAreaRequirements.name}' should contain text 'HTML code?'") {
-            val textArea = requireExistingComponent(textAreaRequirements)
+            val textArea = textAreaRequirements.requireExistingComponent()
 
-            return@createWebCrawlerTest "html code?" in textArea.text()?.toLowerCase().orEmpty()
+            return@createWebCrawlerTest ("html code?" in textArea.text()?.toLowerCase().orEmpty()).toCheckResult()
         }
     )
 }

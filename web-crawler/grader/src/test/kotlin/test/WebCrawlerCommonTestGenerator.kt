@@ -7,8 +7,8 @@ import javax.swing.JFrame
 
 fun frameTests(frameGetter: () -> JFrame): List<TestCase<WebCrawlerClue>> {
     return listOf(
-        createWebCrawlerTest("Window is not visible") { frameGetter().isVisible },
-        createWebCrawlerTest("Window title is empty") { frameGetter().title.isNotEmpty() }
+        createWebCrawlerTest("Window is not visible") { frameGetter().isVisible.toCheckResult() },
+        createWebCrawlerTest("Window title is empty") { frameGetter().title.isNotEmpty().toCheckResult() }
     )
 }
 
@@ -22,8 +22,8 @@ class ComponentRequirements<ComponentType : AbstractJComponentFixture<*, *, *>>(
 
 fun existenceTests(vararg components: ComponentRequirements<*>): List<TestCase<WebCrawlerClue>> {
     fun generateExistenceTest(requirements: ComponentRequirements<*>): TestCase<WebCrawlerClue> {
-        return createWebCrawlerTest("No suitableComponent '${requirements.name}' found") {
-            SwingTest.checkExistence { requirements.suitableComponent }
+        return createWebCrawlerTest("No suitable component '${requirements.name}' is found") {
+            SwingTest.checkExistence { requirements.suitableComponent }.toCheckResult()
         }
     }
 
@@ -32,14 +32,13 @@ fun existenceTests(vararg components: ComponentRequirements<*>): List<TestCase<W
 
 fun componentsAreEnabledTests(vararg components: ComponentRequirements<*>): List<TestCase<WebCrawlerClue>> {
     fun generateIsEnabledTest(requirements: ComponentRequirements<*>): TestCase<WebCrawlerClue> {
-
         return if (requirements.isEnabled) {
             createWebCrawlerTest("'${requirements.name}' should be enabled") {
                 val component = requireNotNull(requirements.suitableComponent) {
                     "Should check for the component existence before"
                 }
 
-                return@createWebCrawlerTest component.isEnabled
+                return@createWebCrawlerTest component.isEnabled.toCheckResult()
             }
         } else {
             createWebCrawlerTest("'${requirements.name}' should be disabled") {
@@ -47,7 +46,7 @@ fun componentsAreEnabledTests(vararg components: ComponentRequirements<*>): List
                     "Should check for the component existence before"
                 }
 
-                return@createWebCrawlerTest !(component.isEnabled)
+                return@createWebCrawlerTest (!component.isEnabled).toCheckResult()
             }
         }
     }

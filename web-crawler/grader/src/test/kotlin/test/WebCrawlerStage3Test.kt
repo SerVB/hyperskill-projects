@@ -12,8 +12,8 @@ class WebCrawlerStage3Test : SwingTest<WebCrawlerClue>(Solution3()) {
 
     override fun generateTestCases(): List<TestCase<WebCrawlerClue>> {
         val htmlText = ComponentRequirements("HtmlTextArea", isEnabled = false) { window.textBox(it) }
-        val urlText = ComponentRequirements("LocationTextField", isEnabled = true) { window.textBox(it) }
-        val getButton = ComponentRequirements("GetTextButton", isEnabled = true) { window.button(it) }
+        val urlText = ComponentRequirements("UrlTextField", isEnabled = true) { window.textBox(it) }
+        val getButton = ComponentRequirements("RunButton", isEnabled = true) { window.button(it) }
         val titleLabel = ComponentRequirements("TitleLabel", isEnabled = true) { window.label(it) }
 
         return frameTests(::frame) +
@@ -43,22 +43,23 @@ fun stage3Tests(
 ): List<TestCase<WebCrawlerClue>> {
     return listOf(
         createWebCrawlerTest("Title your app shows is wrong") {
-            val locationTextField = requireExistingComponent(locationTextFieldRequirements)
-            val getTextButton = requireExistingComponent(getTextButtonRequirements)
-            val titleLabel = requireExistingComponent(titleLabelRequirements)
+            val locationTextField = locationTextFieldRequirements.requireExistingComponent()
+            val getTextButton = getTextButtonRequirements.requireExistingComponent()
+            val titleLabel = titleLabelRequirements.requireExistingComponent()
 
             return@createWebCrawlerTest pages
                 .asSequence()
-                .map { (url, pageAndText) ->
-                    locationTextField.setText("http://localhost:$PORT$url")
+                .map { (url, pageProperties) ->
+                    locationTextField.setText(url)
 
                     getTextButton.click()
 
                     val titleInLabel = titleLabel.text().orEmpty()
 
-                    return@map titleInLabel == pageAndText.title
+                    return@map titleInLabel == pageProperties.title
                 }
                 .all { it }
+                .toCheckResult()
         }.withLocalhostPagesOn(PORT)
     )
 }
