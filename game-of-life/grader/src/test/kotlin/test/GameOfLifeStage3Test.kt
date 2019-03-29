@@ -1,8 +1,8 @@
 package test
 
-import org.hyperskill.hstest.dev.stage.MainMethodTest
-import org.hyperskill.hstest.dev.testcase.CheckResult
-import org.hyperskill.hstest.dev.testcase.TestCase
+import org.hyperskill.hstest.v3.stage.MainMethodTest
+import org.hyperskill.hstest.v3.testcase.CheckResult
+import org.hyperskill.hstest.v3.testcase.TestCase
 import solution.Solution3
 
 class GameOfLifeStage3Test : MainMethodTest<ClueWithChecker>(Solution3::class.java) {

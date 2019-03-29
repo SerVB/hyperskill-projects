@@ -1,6 +1,6 @@
 package test
 
-import org.hyperskill.hstest.dev.testcase.CheckResult
+import org.hyperskill.hstest.v3.testcase.CheckResult
 
 operator fun CheckResult.component1(): Boolean = isCorrect
 operator fun CheckResult.component2(): String? = feedback

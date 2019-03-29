@@ -1,7 +1,7 @@
 package test
 
-import org.hyperskill.hstest.dev.testcase.CheckResult
-import org.hyperskill.hstest.dev.testcase.TestCase
+import org.hyperskill.hstest.v3.testcase.CheckResult
+import org.hyperskill.hstest.v3.testcase.TestCase
 
 sealed class ClueWithChecker(val input: String) {
     fun toTestCase(): TestCase<ClueWithChecker> {

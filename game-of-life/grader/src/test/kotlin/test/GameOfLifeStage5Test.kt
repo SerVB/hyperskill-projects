@@ -1,9 +1,9 @@
 package test
 
 import org.assertj.swing.fixture.JLabelFixture
-import org.hyperskill.hstest.dev.stage.SwingTest
-import org.hyperskill.hstest.dev.testcase.CheckResult
-import org.hyperskill.hstest.dev.testcase.TestCase
+import org.hyperskill.hstest.v3.stage.SwingTest
+import org.hyperskill.hstest.v3.testcase.CheckResult
+import org.hyperskill.hstest.v3.testcase.TestCase
 import solution.Solution56
 
 class GameOfLifeStage5Test : SwingTest<ClueWithChecker>(Solution56()) {

@@ -1,7 +1,7 @@
 package test
 
 import org.assertj.swing.fixture.JLabelFixture
-import org.hyperskill.hstest.dev.testcase.CheckResult
+import org.hyperskill.hstest.v3.testcase.CheckResult
 
 fun checkLabelForInteger(labelRequirements: ComponentRequirements<JLabelFixture>): CheckResult {
     val label = labelRequirements.requireExistingComponent()

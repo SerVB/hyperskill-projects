@@ -1,8 +1,8 @@
 package test
 
 import org.assertj.swing.fixture.AbstractJComponentFixture
-import org.hyperskill.hstest.dev.stage.SwingTest
-import org.hyperskill.hstest.dev.testcase.TestCase
+import org.hyperskill.hstest.v3.stage.SwingTest
+import org.hyperskill.hstest.v3.testcase.TestCase
 import javax.swing.JFrame
 
 fun frameTests(frameGetter: () -> JFrame): List<TestCase<ClueWithChecker>> {
